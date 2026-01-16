@@ -6,7 +6,8 @@ from db import (
     get_plant_by_id,
     add_task,
     get_task_by_id,
-    update_plant_db
+    update_plant_db,
+    update_task_db
 )
 from fastapi.middleware.cors import CORSMiddleware
 from schemas import (
@@ -16,7 +17,8 @@ from schemas import (
     PlantRead,
     PlantCareTaskCreate,
     PlantCareTaskRead,
-    PlantUpdate
+    PlantUpdate,
+    TaskUpdate
 )
 
 app = FastAPI()
@@ -71,4 +73,11 @@ def get_task(task_id: int) -> PlantCareTaskRead:
     task = get_task_by_id(task_id)
     if task is None:
         raise HTTPException(status_code=404, detail="No such task")
+    return task
+
+@app.patch("/api/task/{task_id}")
+def update_task(task_id: int, updates: TaskUpdate) -> PlantCareTaskRead:
+    task = update_task_db(task_id, updates)
+    if task is None:
+        raise HTTPException(status_code=404, detail="No such plant")
     return task

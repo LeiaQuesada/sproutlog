@@ -35,6 +35,8 @@ postgres=# \c sproutlog
 
 \dt
 
+tips: Run sql queries here to check data injection into the database, Test requests in the fastapi docs UI, and watch the FastAPI server in the terminal for error logs.
+
 #### You can log out of your database with
 
 exit

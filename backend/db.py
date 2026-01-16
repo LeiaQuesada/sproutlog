@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
-from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead, PlantCareTaskCreate, PlantCareTaskRead, PlantUpdate
+from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead, PlantCareTaskCreate, PlantCareTaskRead, PlantUpdate, TaskUpdate
 from db_models import DBGardener, DBPlant, DBPlantCareTask
 
 DATABASE_URL = "postgresql+psycopg://postgres:postgres@localhost:5432/sproutlog"
@@ -102,3 +102,12 @@ def get_task_by_id(task_id: int) -> PlantCareTaskRead:
         created_at=task_object.created_at,
         plant_id=task_object.plant_id
     )
+
+def update_task_db(task_id: int, updates: TaskUpdate) -> DBPlantCareTask:
+    with SessionLocal() as session:
+        task = session.get(DBPlantCareTask, task_id)
+        for field, value in updates.model_dump(exclude_unset=True).items():
+            setattr(task, field, value)
+        session.commit()
+        session.refresh(task)
+        return task

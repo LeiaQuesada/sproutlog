@@ -48,5 +48,10 @@ class PlantCareTaskRead(ORMBase):
     created_at: datetime
     plant_id: int
 
+class TaskUpdate(ORMBase):
+    task_type: str | None = None
+    due_at: datetime | None = None
+    completed_at: datetime | None = None
+
 class PlantReadWithTasks(PlantRead):
     care_tasks: list["PlantCareTaskRead"]
