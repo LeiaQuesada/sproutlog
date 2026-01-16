@@ -129,3 +129,20 @@ def update_task_db(task_id: int, updates: TaskUpdate) -> DBPlantCareTask:
         session.commit()
         session.refresh(task)
         return task
+
+def get_all_tasks() -> list[PlantCareTaskRead]:
+    with SessionLocal() as session:
+        statement = select(DBPlantCareTask)
+        task_objects = session.scalars(statement).all()
+        tasks: list[PlantCareTaskRead] = []
+        for task in task_objects:
+            result = PlantCareTaskRead(
+                id=task.id,
+                task_type=task.task_type,
+                due_at=task.due_at,
+                completed_at=task.completed_at,
+                created_at=task.created_at,
+                plant_id=task.plant_id
+            )
+            tasks.append(result)
+        return tasks
