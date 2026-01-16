@@ -1,8 +1,14 @@
+import { Routes, Route } from "react-router";
+import Layout from "./Layout";
+import PlantsList from "./PlantsList";
+
 function App() {
 	return (
-		<>
-			<h1>SproutLog</h1>
-		</>
+		<Routes>
+			<Route element={<Layout />}>
+				<Route index element={<PlantsList />} />
+			</Route>
+		</Routes>
 	);
 }
 
