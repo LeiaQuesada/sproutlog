@@ -45,3 +45,19 @@ def add_plant(plant_deets: PlantCreate) -> PlantRead:
         created_at=plant_model.created_at,
         gardener_id=plant_model.gardener_id
     )
+
+def get_plant_by_id(plant_id: int) -> PlantRead:
+    with SessionLocal() as session:
+        statement = select(DBPlant).where(DBPlant.id == plant_id)
+        plant_object = session.scalar(statement)
+        if plant_object is None:
+            return
+    return PlantRead(
+        id=plant_object.id,
+        title=plant_object.title,
+        description=plant_object.description,
+        image_url=plant_object.image_url,
+        is_edible=plant_object.is_edible,
+        created_at=plant_object.created_at,
+        gardener_id=plant_object.gardener_id
+    )
