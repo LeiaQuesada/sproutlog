@@ -37,33 +37,33 @@ app.add_middleware(
 
 # API Layer, HTTP semantics, status codes, request/response
 
-@app.post("/api/gardener")
+@app.post("/gardener")
 def create_gardener(name: GardenerCreate) -> GardenerRead:
     return add_gardener(name)
 
-@app.get("/api/gardener/{gardener_id}")
+@app.get("/gardener/{gardener_id}")
 def get_gardener(gardener_id: int) -> GardenerRead:
     gardener =  get_gardener_by_id(gardener_id)
     if gardener is None:
         raise HTTPException(status_code=404, detail="No such gardener")
     return gardener
 
-@app.post("/api/plant")
+@app.post("/plant")
 def create_plant(plant_deets: PlantCreate) -> PlantRead:
     return add_plant(plant_deets)
 
-@app.get("/api/plant/{plant_id}")
+@app.get("/plant/{plant_id}")
 def get_plant(plant_id: int) -> PlantRead:
     plant = get_plant_by_id(plant_id)
     if plant is None:
         raise HTTPException(status_code=404, detail="No such plant")
     return plant
 
-@app.get("/api/plants")
+@app.get("/plants")
 def endpoint_get_all_plants() -> list[PlantRead]:
     return get_all_plants()
 
-@app.patch("/api/plant/{plant_id}")
+@app.patch("/plant/{plant_id}")
 def update_plant(plant_id: int, updates: PlantUpdate) -> PlantRead:
     plant = update_plant_db(plant_id, updates)
     if plant is None:
@@ -71,24 +71,24 @@ def update_plant(plant_id: int, updates: PlantUpdate) -> PlantRead:
     return plant
 
 
-@app.post("/api/task")
+@app.post("/task")
 def create_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
     return add_task(task)
 
-@app.get("/api/task/{task_id}")
+@app.get("/task/{task_id}")
 def get_task(task_id: int) -> PlantCareTaskRead:
     task = get_task_by_id(task_id)
     if task is None:
         raise HTTPException(status_code=404, detail="No such task")
     return task
 
-@app.patch("/api/task/{task_id}")
+@app.patch("/task/{task_id}")
 def update_task(task_id: int, updates: TaskUpdate) -> PlantCareTaskRead:
     task = update_task_db(task_id, updates)
     if task is None:
         raise HTTPException(status_code=404, detail="No such plant")
     return task
 
-@app.get("/api/tasks")
+@app.get("/tasks")
 def endpoint_get_all_tasks() -> list[PlantCareTaskRead]:
     return get_all_tasks()

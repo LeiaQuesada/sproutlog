@@ -1,5 +1,13 @@
 // global types
 
+type NewPlant = {
+	title: string;
+	description: string;
+	image_url: string;
+	is_edible: boolean;
+	gardener_id: string;
+};
+
 type Plant = {
 	id: number;
 	title: string;
@@ -20,5 +28,10 @@ type Task = {
 };
 
 type Gardener = {
+	name: string;
+};
+
+type NewGardener = {
+	id: number;
 	name: string;
 };

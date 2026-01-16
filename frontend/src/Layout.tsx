@@ -20,7 +20,7 @@ export default function Layout() {
 							</NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink to="/create-plant" className="nav-link">
+							<NavLink to="/plant" className="nav-link">
 								Add plant
 							</NavLink>
 						</li>
