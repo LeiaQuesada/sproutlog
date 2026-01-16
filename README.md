@@ -1,10 +1,10 @@
 # SproutLog
 
-## Description
+A full-stack MVP built with React and FastAPI that help plant owners track tasks over time. The app focuses on clean data modeling, time-based logic, and a clear separation of concerns between frontend and backend.
 
-A React MVP built with React and FastAPI that helps users track plant care tasks over time.
+## Separation of Concerns
 
-## Planning
+- SQLAlchemy models handle persistence
 
 ### User Stories:
 
@@ -13,9 +13,15 @@ A React MVP built with React and FastAPI that helps users track plant care tasks
 3. As a user, I want to see which tasks are upcoming or overdue, so that I can prioritize my plant care effectively.
 4. As a user, I want to mark tasks as completed, so that I can track what care I've already done.
 
----
+### Tech Stack
+
+- Frontend: React, TypeScript
+- Backend: FastAPI, SQLAlchemy, Pydantic
+- Database: PostgreSQL
 
 ### Entity Relationship Diagram
+
+![Entity Relationship Diagram of Gardeners, Plants and PlantCareTasks entities](image.png)
 
 ### Wireframes:
 
