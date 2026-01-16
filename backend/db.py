@@ -76,3 +76,18 @@ def add_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
         created_at=task_model.created_at,
         plant_id=task_model.plant_id
     )
+
+def get_task_by_id(task_id: int) -> PlantCareTaskRead:
+    with SessionLocal() as session:
+        statement = select(DBPlantCareTask).where(DBPlantCareTask.id == task_id)
+        task_object = session.scalar(statement)
+        if task_object is None:
+            return
+    return PlantCareTaskRead(
+        id=task_object.id,
+        task_type=task_object.task_type,
+        due_at=task_object.due_at,
+        completed_at=task_object.completed_at,
+        created_at=task_object.created_at,
+        plant_id=task_object.plant_id
+    )

@@ -4,7 +4,8 @@ from db import (
     add_plant,
     get_gardener_by_id,
     get_plant_by_id,
-    add_task
+    add_task,
+    get_task_by_id
 )
 from fastapi.middleware.cors import CORSMiddleware
 from schemas import (
@@ -53,3 +54,10 @@ def get_plant(plant_id: int) -> PlantRead:
 @app.post("/api/task")
 def create_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
     return add_task(task)
+
+@app.get("/api/task/{task_id}")
+def get_task(task_id: int) -> PlantCareTaskRead:
+    task = get_task_by_id(task_id)
+    if task is None:
+        raise HTTPException(status_code=404, detail="No such task")
+    return task
