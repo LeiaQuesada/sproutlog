@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead
 from db_models import DBGardener, DBPlant
@@ -17,6 +17,17 @@ def add_gardener(gardener: GardenerCreate) -> GardenerRead:
     return GardenerRead(
         id=gardener_model.id,
         name=gardener_model.name
+    )
+
+def get_gardener_by_id(gardener_id: int) -> GardenerRead:
+    with SessionLocal() as session:
+        statement = select(DBGardener).where(DBGardener.id == gardener_id)
+        gardener_object = session.scalar(statement)
+        if gardener_object is None:
+            return
+    return GardenerRead(
+        id=gardener_object.id,
+        name=gardener_object.name
     )
 
 def add_plant(plant_deets: PlantCreate) -> PlantRead:
