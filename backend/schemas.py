@@ -1,6 +1,8 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
+# Pydantic models for validation and serialization
+
 class ORMBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -26,6 +28,12 @@ class PlantRead(ORMBase):
     is_edible: bool
     created_at: datetime
     gardener_id: int
+
+class PlantUpdate(ORMBase):
+    title: str | None = None
+    description: str | None = None
+    image_url: str | None = None
+    is_edible: bool | None = None
 
 class PlantCareTaskCreate(ORMBase):
     task_type: str

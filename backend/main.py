@@ -5,7 +5,8 @@ from db import (
     get_gardener_by_id,
     get_plant_by_id,
     add_task,
-    get_task_by_id
+    get_task_by_id,
+    update_plant_db
 )
 from fastapi.middleware.cors import CORSMiddleware
 from schemas import (
@@ -14,7 +15,8 @@ from schemas import (
     PlantCreate,
     PlantRead,
     PlantCareTaskCreate,
-    PlantCareTaskRead
+    PlantCareTaskRead,
+    PlantUpdate
 )
 
 app = FastAPI()
@@ -28,6 +30,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# API Layer, HTTP semantics, status codes, request/response
 
 @app.post("/api/gardener")
 def create_gardener(name: GardenerCreate) -> GardenerRead:
@@ -47,6 +51,13 @@ def create_plant(plant_deets: PlantCreate) -> PlantRead:
 @app.get("/api/plant/{plant_id}")
 def get_plant(plant_id: int) -> PlantRead:
     plant = get_plant_by_id(plant_id)
+    if plant is None:
+        raise HTTPException(status_code=404, detail="No such plant")
+    return plant
+
+@app.patch("/api/plant/{plant_id}")
+def update_plant(plant_id: int, updates: PlantUpdate) -> PlantRead:
+    plant = update_plant_db(plant_id, updates)
     if plant is None:
         raise HTTPException(status_code=404, detail="No such plant")
     return plant

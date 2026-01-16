@@ -7,6 +7,9 @@ from sqlalchemy.orm import (
     mapped_column,
     relationship
 )
+
+# SQLAlchemy models for database state
+
 class Base(DeclarativeBase):
     pass
 class DBGardener(Base):

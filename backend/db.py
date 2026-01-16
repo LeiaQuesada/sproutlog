@@ -1,12 +1,14 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
-from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead, PlantCareTaskCreate, PlantCareTaskRead
+from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead, PlantCareTaskCreate, PlantCareTaskRead, PlantUpdate
 from db_models import DBGardener, DBPlant, DBPlantCareTask
 
 DATABASE_URL = "postgresql+psycopg://postgres:postgres@localhost:5432/sproutlog"
 
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine)
+
+# Data layer for persistence, queries, transactions
 
 def add_gardener(gardener: GardenerCreate) -> GardenerRead:
     with SessionLocal() as session:
@@ -61,6 +63,15 @@ def get_plant_by_id(plant_id: int) -> PlantRead:
         created_at=plant_object.created_at,
         gardener_id=plant_object.gardener_id
     )
+
+def update_plant_db(plant_id: int, updates: PlantUpdate) -> DBPlant:
+    with SessionLocal() as session:
+        plant = session.get(DBPlant, plant_id)
+        for field, value in updates.model_dump(exclude_unset=True).items():
+            setattr(plant, field, value)
+        session.commit()
+        session.refresh(plant)
+        return plant
 
 def add_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
     with SessionLocal() as session:
