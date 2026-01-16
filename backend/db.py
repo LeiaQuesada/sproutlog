@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
-from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead
-from db_models import DBGardener, DBPlant
+from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead, PlantCareTaskCreate, PlantCareTaskRead
+from db_models import DBGardener, DBPlant, DBPlantCareTask
 
 DATABASE_URL = "postgresql+psycopg://postgres:postgres@localhost:5432/sproutlog"
 
@@ -60,4 +60,19 @@ def get_plant_by_id(plant_id: int) -> PlantRead:
         is_edible=plant_object.is_edible,
         created_at=plant_object.created_at,
         gardener_id=plant_object.gardener_id
+    )
+
+def add_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
+    with SessionLocal() as session:
+        task_model = DBPlantCareTask(**task.model_dump())
+        session.add(task_model)
+        session.commit()
+        session.refresh(task_model)
+    return PlantCareTaskRead(
+        id=task_model.id,
+        task_type=task_model.task_type,
+        due_at=task_model.due_at,
+        completed_at=task_model.completed_at,
+        created_at=task_model.created_at,
+        plant_id=task_model.plant_id
     )

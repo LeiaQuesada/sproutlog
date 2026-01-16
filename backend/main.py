@@ -1,7 +1,20 @@
 from fastapi import FastAPI, HTTPException
-from db import add_gardener, add_plant, get_gardener_by_id, get_plant_by_id
+from db import (
+    add_gardener,
+    add_plant,
+    get_gardener_by_id,
+    get_plant_by_id,
+    add_task
+)
 from fastapi.middleware.cors import CORSMiddleware
-from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead
+from schemas import (
+    GardenerCreate,
+    GardenerRead,
+    PlantCreate,
+    PlantRead,
+    PlantCareTaskCreate,
+    PlantCareTaskRead
+)
 
 app = FastAPI()
 
@@ -36,3 +49,7 @@ def get_plant(plant_id: int) -> PlantRead:
     if plant is None:
         raise HTTPException(status_code=404, detail="No such plant")
     return plant
+
+@app.post("/api/task")
+def create_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
+    return add_task(task)
