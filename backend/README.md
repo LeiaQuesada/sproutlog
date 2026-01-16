@@ -15,7 +15,7 @@ docker compose up -d
 
 ### connect to the database server:
 
-docker compose exec postgres psql -U postgres sproutlog
+docker compose exec postgres psql -U postgres
 
 Once you are logged into psql. Use the following commands to create a database for this project, make it your current database, and then load in our table and sample data:
 
@@ -23,17 +23,13 @@ Once you are logged into psql. Use the following commands to create a database f
 
 postgres=# \l
 
-#### Create a new database for this project
-
-postgres=# create database <database name>;
-
 #### Connect to our database
 
-postgres=# \c <database name>
+postgres=# \c sproutlog
 
 #### Load the database schema and any sql commands in the file data injection aka seed the database
 
-<database name>=# \i <sql file path>;
+<database name>=# \i data/sproutlogs.sql;
 
 #### list all tables
 
