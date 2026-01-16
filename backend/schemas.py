@@ -1,0 +1,44 @@
+from pydantic import BaseModel, ConfigDict
+from datetime import datetime
+
+class ORMBase(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+class GardenerCreate(ORMBase):
+    name:str
+
+class GardenerRead(ORMBase):
+    id: int
+    name: str
+
+class PlantCreate(ORMBase):
+    title: str
+    description: str | None = None
+    image_url: str | None
+    is_edible: bool = False
+    gardener_id: int
+
+class PlantRead(ORMBase):
+    id: int
+    title: str
+    description: str | None = None
+    image_url: str | None
+    is_edible: bool
+    created_at: datetime
+    gardener_id: int
+
+class PlantCareTaskCreate(ORMBase):
+    task_type: str
+    due_at: datetime | None = None
+    plant_id: int
+
+class PlantCareTaskRead(ORMBase):
+    id: int
+    task_type: str
+    due_at: datetime | None
+    completed_at: datetime | None
+    created_at: datetime
+    plant_id: int
+
+class PlantReadWithTasks(PlantRead):
+    care_tasks: list["PlantCareTaskRead"]
