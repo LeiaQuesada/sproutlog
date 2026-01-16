@@ -64,6 +64,24 @@ def get_plant_by_id(plant_id: int) -> PlantRead:
         gardener_id=plant_object.gardener_id
     )
 
+def get_all_plants() -> list[PlantRead]:
+    with SessionLocal() as session:
+        stmt = select(DBPlant)
+        plant_objects = session.scalars(stmt).all()
+        plants: list[PlantRead] = []
+        for plant in plant_objects:
+            result = PlantRead(
+                id=plant.id,
+                title=plant.title,
+                description=plant.description,
+                image_url=plant.image_url,
+                is_edible=plant.is_edible,
+                created_at=plant.created_at,
+                gardener_id=plant.gardener_id
+            )
+            plants.append(result)
+        return plants
+
 def update_plant_db(plant_id: int, updates: PlantUpdate) -> DBPlant:
     with SessionLocal() as session:
         plant = session.get(DBPlant, plant_id)
