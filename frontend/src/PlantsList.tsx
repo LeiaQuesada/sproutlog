@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { loadAllPlants } from "./sprout-api.ts";
 import { Link } from "react-router";
 
@@ -21,17 +21,20 @@ export default function PlantsList() {
 
 	return (
 		<>
-			<h1>All plants</h1>
+			<h1>All Plants</h1>
 			<div id="all-plants">
 				{plants.map((plant) => (
-					<>
+					<Fragment key={plant.id}>
 						<Link to={`/plant/${plant.id}`} className="plant" key={plant.id}>
-							<div className="plant-title">{plant.title}</div>
+							<div className="plant-title" key={plant.id}>
+								{plant.title}
+							</div>
+							{/* TODO placeholder image needed */}
 							<img src={plant.image_url}></img>
 							<p>{plant.description}</p>
 							<p>{plant.is_edible ? "Edible" : "Not Edible"}</p>
 						</Link>
-					</>
+					</Fragment>
 				))}
 			</div>
 		</>

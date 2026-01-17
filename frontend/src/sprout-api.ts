@@ -48,3 +48,30 @@ export async function createPlant(plant: NewPlant) {
 		console.error(e);
 	}
 }
+
+export async function loadPlant(plant_id: string) {
+	try {
+		const response = await fetch(`${baseURL}/plant/${plant_id}`);
+		if (!response.ok) {
+			throw new Error(`${response.status}`);
+		}
+		const plant = (await response.json()) as Plant;
+		console.log(plant);
+		return plant;
+	} catch (error) {
+		console.error("error occurred while loading plant", error);
+	}
+}
+
+export async function loadAllTasks() {
+	try {
+		const response = await fetch(`${baseURL}/tasks`);
+		if (!response.ok) {
+			throw new Error(`${response.status}`);
+		}
+		const tasks = (await response.json()) as Task[];
+		return tasks;
+	} catch (error) {
+		console.error("error occurred while loading all tasks", error);
+	}
+}

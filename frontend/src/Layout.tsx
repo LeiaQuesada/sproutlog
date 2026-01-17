@@ -16,12 +16,12 @@ export default function Layout() {
 						</li>
 						<li className="nav-item">
 							<NavLink to="/plants" className="nav-link">
-								All plants
+								All Plants
 							</NavLink>
 						</li>
 						<li className="nav-item">
 							<NavLink to="/plant" className="nav-link">
-								Add plant
+								Add Plant
 							</NavLink>
 						</li>
 					</ul>
