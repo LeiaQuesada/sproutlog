@@ -9,7 +9,7 @@ from db import (
     update_plant_db,
     update_task_db,
     get_all_plants,
-    get_all_tasks
+    get_all_tasks,
 )
 from fastapi.middleware.cors import CORSMiddleware
 from schemas import (
@@ -20,7 +20,7 @@ from schemas import (
     PlantCareTaskCreate,
     PlantCareTaskRead,
     PlantUpdate,
-    TaskUpdate
+    TaskUpdate,
 )
 
 app = FastAPI()
@@ -37,20 +37,24 @@ app.add_middleware(
 
 # API Layer, HTTP semantics, status codes, request/response
 
+
 @app.post("/gardener")
 def create_gardener(name: GardenerCreate) -> GardenerRead:
     return add_gardener(name)
 
+
 @app.get("/gardener/{gardener_id}")
 def get_gardener(gardener_id: int) -> GardenerRead:
-    gardener =  get_gardener_by_id(gardener_id)
+    gardener = get_gardener_by_id(gardener_id)
     if gardener is None:
         raise HTTPException(status_code=404, detail="No such gardener")
     return gardener
 
+
 @app.post("/plant")
 def create_plant(plant_deets: PlantCreate) -> PlantRead:
     return add_plant(plant_deets)
+
 
 @app.get("/plant/{plant_id}")
 def get_plant(plant_id: int) -> PlantRead:
@@ -59,9 +63,11 @@ def get_plant(plant_id: int) -> PlantRead:
         raise HTTPException(status_code=404, detail="No such plant")
     return plant
 
+
 @app.get("/plants")
 def endpoint_get_all_plants() -> list[PlantRead]:
     return get_all_plants()
+
 
 @app.patch("/plant/{plant_id}")
 def update_plant(plant_id: int, updates: PlantUpdate) -> PlantRead:
@@ -75,12 +81,14 @@ def update_plant(plant_id: int, updates: PlantUpdate) -> PlantRead:
 def create_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
     return add_task(task)
 
+
 @app.get("/task/{task_id}")
 def get_task(task_id: int) -> PlantCareTaskRead:
     task = get_task_by_id(task_id)
     if task is None:
         raise HTTPException(status_code=404, detail="No such task")
     return task
+
 
 @app.patch("/task/{task_id}")
 def update_task(task_id: int, updates: TaskUpdate) -> PlantCareTaskRead:
@@ -89,6 +97,10 @@ def update_task(task_id: int, updates: TaskUpdate) -> PlantCareTaskRead:
         raise HTTPException(status_code=404, detail="No such plant")
     return task
 
+
 @app.get("/tasks")
 def endpoint_get_all_tasks() -> list[PlantCareTaskRead]:
     return get_all_tasks()
+
+
+# @app.post()

@@ -18,12 +18,19 @@ type Plant = {
 	gardener_id: string;
 };
 
-type Task = {
-	id: number;
+export interface Task {
+	id?: number;
 	task_type: string;
-	due_at: Date;
-	completed_at: Date;
-	created_at: Date;
+	due_at: string;
+	completed_at?: string | null;
+	plant_id: number;
+}
+
+type NewTask = {
+	task_type: string;
+	due_at: string;
+	completed_at: string;
+	created_at: string | null;
 	plant_id: number;
 };
 
@@ -35,3 +42,5 @@ type NewGardener = {
 	id: number;
 	name: string;
 };
+
+type TaskStatus = "upcoming" | "overdue" | "completed";

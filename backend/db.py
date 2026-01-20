@@ -1,14 +1,26 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
-from schemas import GardenerCreate, GardenerRead, PlantCreate, PlantRead, PlantCareTaskCreate, PlantCareTaskRead, PlantUpdate, TaskUpdate
+from schemas import (
+    GardenerCreate,
+    GardenerRead,
+    PlantCreate,
+    PlantRead,
+    PlantCareTaskCreate,
+    PlantCareTaskRead,
+    PlantUpdate,
+    TaskUpdate,
+)
 from db_models import DBGardener, DBPlant, DBPlantCareTask
 
-DATABASE_URL = "postgresql+psycopg://postgres:postgres@localhost:5432/sproutlog"
+DATABASE_URL = (
+    "postgresql+psycopg://postgres:postgres@localhost:5432/sproutlog"
+)
 
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(bind=engine)
 
 # Data layer for persistence, queries, transactions
+
 
 def add_gardener(gardener: GardenerCreate) -> GardenerRead:
     with SessionLocal() as session:
@@ -16,10 +28,8 @@ def add_gardener(gardener: GardenerCreate) -> GardenerRead:
         session.add(gardener_model)
         session.commit()
         session.refresh(gardener_model)
-    return GardenerRead(
-        id=gardener_model.id,
-        name=gardener_model.name
-    )
+    return GardenerRead(id=gardener_model.id, name=gardener_model.name)
+
 
 def get_gardener_by_id(gardener_id: int) -> GardenerRead:
     with SessionLocal() as session:
@@ -27,10 +37,8 @@ def get_gardener_by_id(gardener_id: int) -> GardenerRead:
         gardener_object = session.scalar(statement)
         if gardener_object is None:
             return
-    return GardenerRead(
-        id=gardener_object.id,
-        name=gardener_object.name
-    )
+    return GardenerRead(id=gardener_object.id, name=gardener_object.name)
+
 
 def add_plant(plant_deets: PlantCreate) -> PlantRead:
     with SessionLocal() as session:
@@ -45,8 +53,9 @@ def add_plant(plant_deets: PlantCreate) -> PlantRead:
         image_url=plant_model.image_url,
         is_edible=plant_model.is_edible,
         created_at=plant_model.created_at,
-        gardener_id=plant_model.gardener_id
+        gardener_id=plant_model.gardener_id,
     )
+
 
 def get_plant_by_id(plant_id: int) -> PlantRead:
     with SessionLocal() as session:
@@ -61,8 +70,9 @@ def get_plant_by_id(plant_id: int) -> PlantRead:
         image_url=plant_object.image_url,
         is_edible=plant_object.is_edible,
         created_at=plant_object.created_at,
-        gardener_id=plant_object.gardener_id
+        gardener_id=plant_object.gardener_id,
     )
+
 
 def get_all_plants() -> list[PlantRead]:
     with SessionLocal() as session:
@@ -77,10 +87,11 @@ def get_all_plants() -> list[PlantRead]:
                 image_url=plant.image_url,
                 is_edible=plant.is_edible,
                 created_at=plant.created_at,
-                gardener_id=plant.gardener_id
+                gardener_id=plant.gardener_id,
             )
             plants.append(result)
         return plants
+
 
 def update_plant_db(plant_id: int, updates: PlantUpdate) -> DBPlant:
     with SessionLocal() as session:
@@ -90,6 +101,7 @@ def update_plant_db(plant_id: int, updates: PlantUpdate) -> DBPlant:
         session.commit()
         session.refresh(plant)
         return plant
+
 
 def add_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
     with SessionLocal() as session:
@@ -103,12 +115,15 @@ def add_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
         due_at=task_model.due_at,
         completed_at=task_model.completed_at,
         created_at=task_model.created_at,
-        plant_id=task_model.plant_id
+        plant_id=task_model.plant_id,
     )
+
 
 def get_task_by_id(task_id: int) -> PlantCareTaskRead:
     with SessionLocal() as session:
-        statement = select(DBPlantCareTask).where(DBPlantCareTask.id == task_id)
+        statement = select(DBPlantCareTask).where(
+            DBPlantCareTask.id == task_id
+        )
         task_object = session.scalar(statement)
         if task_object is None:
             return
@@ -118,8 +133,9 @@ def get_task_by_id(task_id: int) -> PlantCareTaskRead:
         due_at=task_object.due_at,
         completed_at=task_object.completed_at,
         created_at=task_object.created_at,
-        plant_id=task_object.plant_id
+        plant_id=task_object.plant_id,
     )
+
 
 def update_task_db(task_id: int, updates: TaskUpdate) -> DBPlantCareTask:
     with SessionLocal() as session:
@@ -129,6 +145,7 @@ def update_task_db(task_id: int, updates: TaskUpdate) -> DBPlantCareTask:
         session.commit()
         session.refresh(task)
         return task
+
 
 def get_all_tasks() -> list[PlantCareTaskRead]:
     with SessionLocal() as session:
@@ -142,7 +159,7 @@ def get_all_tasks() -> list[PlantCareTaskRead]:
                 due_at=task.due_at,
                 completed_at=task.completed_at,
                 created_at=task.created_at,
-                plant_id=task.plant_id
+                plant_id=task.plant_id,
             )
             tasks.append(result)
         return tasks

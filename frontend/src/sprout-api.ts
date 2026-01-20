@@ -2,7 +2,7 @@ const baseURL = "http://localhost:8000";
 
 export async function createGardener(name: Gardener) {
 	try {
-		const response = await fetch(`${baseURL}/gardener}`, {
+		const response = await fetch(`${baseURL}/gardener`, {
 			method: "POST",
 			body: JSON.stringify(name),
 			headers: {
@@ -73,5 +73,24 @@ export async function loadAllTasks() {
 		return tasks;
 	} catch (error) {
 		console.error("error occurred while loading all tasks", error);
+	}
+}
+
+export async function createTask(task: Task) {
+	try {
+		const response = await fetch(`${baseURL}/task`, {
+			method: "POST",
+			body: JSON.stringify(task),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (!response.ok) {
+			throw new Error(`${response.status}`);
+		}
+		const created_task = (await response.json()) as NewTask;
+		return created_task;
+	} catch (error) {
+		console.error("Error occurred while creating task", error);
 	}
 }

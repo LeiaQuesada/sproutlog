@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createPlant } from "./sprout-api";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function PlantForm() {
 	const [error, setError] = useState<string | null>(null);
@@ -59,13 +59,14 @@ export default function PlantForm() {
 					<input type="checkbox" name="is_edible" id="is_edible" />
 				</div>
 				<div className="form-actions">
-					<button
+					<Link
+						to="/plants"
 						className="button button-secondary"
 						type="reset"
 						id="button-cancel"
 					>
 						Cancel
-					</button>
+					</Link>
 					<button className="button" type="submit">
 						Add new plant
 					</button>

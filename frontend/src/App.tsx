@@ -4,6 +4,7 @@ import TasksList from "./TasksList";
 import PlantsList from "./PlantsList";
 import PlantForm from "./PlantForm";
 import PlantDetails from "./PlantDetails.tsx";
+import TaskForm from "./TaskForm.tsx";
 
 function App() {
 	return (
@@ -13,6 +14,7 @@ function App() {
 				<Route path="/plant/:id" element={<PlantDetails />} />
 				<Route path="/plant" element={<PlantForm />} />
 				<Route path="/plants" element={<PlantsList />} />
+				<Route path="/task/:id/edit" element={<TaskForm />} />
 			</Route>
 		</Routes>
 	);
