@@ -11,7 +11,6 @@ A full-stack MVP built with React and FastAPI that help plant owners track tasks
 1. As a user, I can add then view plants with basic details,so that I can keep track of all the plants I am resonsible for.
 2. As a user, I want to create care tasks for a plant with a due date, so that I know what care actions are needed and when.
 3. As a user, I want to see which tasks are upcoming or overdue, so that I can prioritize my plant care effectively.
-4. As a user, I want to mark tasks as completed, so that I can track what care I've already done.
 
 ### Tech Stack
 
@@ -21,17 +20,41 @@ A full-stack MVP built with React and FastAPI that help plant owners track tasks
 
 ### Entity Relationship Diagram
 
-![Entity Relationship Diagram of Gardeners, Plants and PlantCareTasks entities](image.png)
+![Entity Relationship Diagram of Gardeners, Plants and PlantCareTasks entities](erd.png)
 
 ### Wireframes:
+
+User can add a plant:
+![Plant form](plant-form.jpg)
+User can view all plants:
+![Plants view](plant-list.png)
+User can view plant details:
+![Plant view](plant-card.png)
+User can add a task to a plant:
+![Task form](add-task.png)
+User can view all tasks:
+![Task dashboard](task-dashboard.png)
 
 ## Visuals
 
 <!-- Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method. -->
 
+User can add a plant:
+![Plant form](browser-add-task.png)
+User can view all plants:
+![Plants view](browser-plants-dashboard.png)
+User can view plant details:
+![Plant view](browser-plant-card.png)
+User can add a task to a plant:
+![Task form](browser-add-task.png)
+User can view all tasks:
+![Task dashboard](browser-task-dashboard.png)
+
 ## Installation
 
 <!-- Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection. -->
+
+See separate project backend and frontend folder's README.md for instructions to get project up and running.
 
 ## Usage
 
@@ -45,11 +68,11 @@ A full-stack MVP built with React and FastAPI that help plant owners track tasks
 
 Future considerations.
 
+Next feature to implement: As a user, I want to mark tasks as completed, so that I can track what care I've already done.
+
 ## Contributing
 
 Open to contributions.
-
-<!-- TODO: Add set up and build instructions -->
 
 # React + TypeScript + Vite
 

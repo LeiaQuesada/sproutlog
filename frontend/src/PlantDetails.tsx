@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { loadPlant } from "./sprout-api.ts";
 import { Link, useParams } from "react-router";
 
@@ -30,8 +30,6 @@ export default function PlantDetails() {
 		return <p>Loading...</p>;
 	}
 
-	// const formattedDate = new Date(plant.)
-
 	return (
 		<div className="plant-details" key={plant.id}>
 			<h1>{plant.title}</h1>
@@ -47,8 +45,7 @@ export default function PlantDetails() {
 					</Link>
 					<br />
 					<br />
-					{/* TODO MAKE TASK FORM */}
-					<Link to={`/task/${plant.id}/edit`} className="button">
+					<Link to={`/plant/${plant.id}/tasks/new`} className="button">
 						Add Task
 					</Link>
 				</span>
