@@ -40,14 +40,17 @@ class PlantCareTaskCreate(ORMBase):
     due_at: datetime | None = None
     plant_id: int
 
+
+class PlantSummary(ORMBase):
+    id: int
+    title: str
 class PlantCareTaskRead(ORMBase):
     id: int
     task_type: str
     due_at: datetime | None
     completed_at: datetime | None
     created_at: datetime
-    plant_id: int
-
+    plant: PlantSummary
 class TaskUpdate(ORMBase):
     task_type: str | None = None
     due_at: datetime | None = None

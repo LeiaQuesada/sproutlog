@@ -18,13 +18,16 @@ type Plant = {
 	gardener_id: string;
 };
 
-export interface Task {
-	id?: number;
+type Task = {
+	id: number;
 	task_type: string;
 	due_at: string;
 	completed_at?: string | null;
-	plant_id: number;
-}
+	plant: {
+		id: number;
+		title: string;
+	};
+};
 
 type NewTask = {
 	task_type: string;

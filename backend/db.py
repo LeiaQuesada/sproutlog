@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, select
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, joinedload
 from schemas import (
     GardenerCreate,
     GardenerRead,
@@ -149,17 +149,11 @@ def update_task_db(task_id: int, updates: TaskUpdate) -> DBPlantCareTask:
 
 def get_all_tasks() -> list[PlantCareTaskRead]:
     with SessionLocal() as session:
-        statement = select(DBPlantCareTask)
-        task_objects = session.scalars(statement).all()
-        tasks: list[PlantCareTaskRead] = []
-        for task in task_objects:
-            result = PlantCareTaskRead(
-                id=task.id,
-                task_type=task.task_type,
-                due_at=task.due_at,
-                completed_at=task.completed_at,
-                created_at=task.created_at,
-                plant_id=task.plant_id,
-            )
-            tasks.append(result)
-        return tasks
+        stmt = (
+            select(DBPlantCareTask)
+            .join(DBPlantCareTask.plant)
+            .options(joinedload(DBPlantCareTask.plant))
+        )
+
+        task_objects = session.execute(stmt).scalars().all()
+        return task_objects

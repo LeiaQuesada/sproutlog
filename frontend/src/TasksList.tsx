@@ -1,80 +1,50 @@
-import { Fragment } from "react/jsx-runtime";
 import { useEffect, useState } from "react";
-import { loadAllTasks } from "./sprout-api.ts";
-import { Link } from "react-router";
-import getTaskStatus from "./taskStatus.ts";
+import { loadAllTasks } from "./sprout-api";
+import getTaskStatus from "./taskStatus";
+import TaskCard from "./TaskCard";
 
 export default function TasksList() {
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const [error, setError] = useState<string | null>(null);
-	// const [overdueStatus, setOverdueStatus] = useState(null);
-	// const [upcomingStatus, setUpcomingStatus] = useState(null);
-	// const [completedStatus, setCompletedStatus] = useState(null);
 
 	useEffect(() => {
 		loadAllTasks().then((tasks) => {
 			if (!tasks) {
-				setError("Couldn't load the list of tasks. Try again later");
+				setError("Couldn't load tasks");
 				return;
 			}
 			setTasks(tasks);
 		});
 	}, []);
 
-	if (error) {
-		return <p className="error">{error}</p>;
-	}
+	if (error) return <p className="error">{error}</p>;
 
-	const overdueTasks = tasks.filter(
-		(task) => getTaskStatus(task) === "overdue"
-	);
-
-	const upcomingTasks = tasks.filter(
-		(task) => getTaskStatus(task) === "upcoming"
-	);
-
-	const completedTasks = tasks.filter(
-		(task) => getTaskStatus(task) === "completed"
-	);
+	const overdueTasks = tasks.filter((t) => getTaskStatus(t) === "overdue");
+	const upcomingTasks = tasks.filter((t) => getTaskStatus(t) === "upcoming");
+	const completedTasks = tasks.filter((t) => getTaskStatus(t) === "completed");
 
 	return (
 		<>
 			<h1>Overdue Tasks</h1>
-			<div id="all-tasks">
-				{overdueTasks.map((task) => (
-					<Fragment key={task.id}>
-						<Link to={`/tasks/${task.id}`} className="task" key={task.id}>
-							<p className="task-title">{task.task_type}</p>
-						</Link>
-					</Fragment>
-				))}
-			</div>
+			{overdueTasks.length > 0 ? (
+				overdueTasks.map((task) => <TaskCard key={task.id} task={task} />)
+			) : (
+				<p>No overdue tasks 🎉</p>
+			)}
+
 			<h1>Upcoming Tasks</h1>
-			<div id="all-tasks">
-				{upcomingTasks ? (
-					upcomingTasks.map((task) => (
-						<Fragment key={task.id}>
-							<Link to={`/tasks/${task.id}`} className="task" key={task.id}>
-								<div className="task-title">{task.task_type}</div>
-								<p>{task.task_type}</p>
-							</Link>
-						</Fragment>
-					))
-				) : (
-					<p>There are no upcoming tasks</p>
-				)}
-			</div>
+			{upcomingTasks.length > 0 ? (
+				upcomingTasks.map((task) => <TaskCard key={task.id} task={task} />)
+			) : (
+				<p>No upcoming tasks</p>
+			)}
+
 			<h1>Completed Tasks</h1>
-			<div id="all-tasks">
-				{completedTasks.map((task) => (
-					<Fragment key={task.id}>
-						<Link to={`/tasks/${task.id}`} className="task" key={task.id}>
-							<div className="task-title">{task.task_type}</div>
-							<p>{task.task_type}</p>
-						</Link>
-					</Fragment>
-				))}
-			</div>
+			{completedTasks.length > 0 ? (
+				completedTasks.map((task) => <TaskCard key={task.id} task={task} />)
+			) : (
+				<p>No completed tasks yet</p>
+			)}
 		</>
 	);
 }
