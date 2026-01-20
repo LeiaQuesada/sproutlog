@@ -26,25 +26,31 @@ export default function TasksList() {
 	return (
 		<>
 			<h1>Overdue Tasks</h1>
-			{overdueTasks.length > 0 ? (
-				overdueTasks.map((task) => <TaskCard key={task.id} task={task} />)
-			) : (
-				<p>No overdue tasks 🎉</p>
-			)}
+			<div id="all-tasks">
+				{overdueTasks.length > 0 ? (
+					overdueTasks.map((task) => <TaskCard key={task.id} task={task} />)
+				) : (
+					<p>No overdue tasks 🎉</p>
+				)}
+			</div>
 
 			<h1>Upcoming Tasks</h1>
-			{upcomingTasks.length > 0 ? (
-				upcomingTasks.map((task) => <TaskCard key={task.id} task={task} />)
-			) : (
-				<p>No upcoming tasks</p>
-			)}
+			<div id="all-tasks">
+				{upcomingTasks.length > 0 ? (
+					upcomingTasks.map((task) => <TaskCard key={task.id} task={task} />)
+				) : (
+					<p>No upcoming tasks</p>
+				)}
+			</div>
 
 			<h1>Completed Tasks</h1>
-			{completedTasks.length > 0 ? (
-				completedTasks.map((task) => <TaskCard key={task.id} task={task} />)
-			) : (
-				<p>No completed tasks yet</p>
-			)}
+			<div id="all-tasks">
+				{completedTasks.length > 0 ? (
+					completedTasks.map((task) => <TaskCard key={task.id} task={task} />)
+				) : (
+					<p>No completed tasks yet</p>
+				)}
+			</div>
 		</>
 	);
 }
