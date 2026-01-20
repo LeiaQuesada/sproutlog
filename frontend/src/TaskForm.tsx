@@ -46,12 +46,7 @@ export default function TaskForm() {
 
 		const newTask = await createTask(body);
 
-		if (!newTask) {
-			setError("Failed to create task");
-			return;
-		}
-
-		navigate(`/plant/${id}`);
+		navigate(`/`);
 	}
 
 	if (error) return <p className="error">{error}</p>;

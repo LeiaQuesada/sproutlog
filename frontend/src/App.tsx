@@ -11,10 +11,10 @@ function App() {
 		<Routes>
 			<Route element={<Layout />}>
 				<Route index element={<TasksList />} />
+				<Route path="/plant/:id/tasks/new" element={<TaskForm />} />
 				<Route path="/plant/:id" element={<PlantDetails />} />
 				<Route path="/plant" element={<PlantForm />} />
 				<Route path="/plants" element={<PlantsList />} />
-				<Route path="/task/:id/edit" element={<TaskForm />} />
 			</Route>
 		</Routes>
 	);

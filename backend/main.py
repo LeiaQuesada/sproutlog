@@ -77,7 +77,7 @@ def update_plant(plant_id: int, updates: PlantUpdate) -> PlantRead:
     return plant
 
 
-@app.post("/task")
+@app.post("/tasks")
 def create_task(task: PlantCareTaskCreate) -> PlantCareTaskRead:
     return add_task(task)
 

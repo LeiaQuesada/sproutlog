@@ -78,7 +78,7 @@ export async function loadAllTasks() {
 
 export async function createTask(task: Task) {
 	try {
-		const response = await fetch(`${baseURL}/task`, {
+		const response = await fetch(`${baseURL}/tasks`, {
 			method: "POST",
 			body: JSON.stringify(task),
 			headers: {
@@ -86,11 +86,13 @@ export async function createTask(task: Task) {
 			},
 		});
 		if (!response.ok) {
-			throw new Error(`${response.status}`);
+			const text = await response.text();
+			console.error("Backend error:", text);
+			throw new Error(`${response.status.toString()}`);
 		}
-		const created_task = (await response.json()) as NewTask;
-		return created_task;
+		return (await response.json()) as NewTask;
 	} catch (error) {
 		console.error("Error occurred while creating task", error);
+		return null;
 	}
 }
