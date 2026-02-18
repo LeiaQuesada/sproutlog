@@ -2,6 +2,107 @@
 
 A full-stack MVP built with React and FastAPI that help plant owners track tasks over time. The app focuses on clean data modeling, time-based logic, and a clear separation of concerns between frontend and backend.
 
+## Visuals
+
+<!-- Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method. -->
+
+User can add a plant:
+![Plant form](browser-plant-form.png)
+User can view all plants:
+![Plants view](browser-plants-dashboard.png)
+User can view plant details:
+![Plant view](browser-plant-card.png)
+User can add a task to a plant:
+![Task form](browser-add-task.png)
+User can view all tasks:
+![Task dashboard](browser-task-dashboard.png)
+
+## Tech Stack
+
+### Frontend
+
+- React (Vite)
+- JavaScript / CSS
+
+### Backend
+
+- FastAPI
+- Python
+- PostgreSQL
+- Docker
+
+## Local Setup
+
+### Prerequisites:
+
+- Docker
+- Node.js
+- Python 3.10+
+
+### Frontend Setup
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+Visit:
+http://localhost:5173/
+
+### Backend Setup
+
+```
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+#### Start PostgreSQL (Docker)
+
+```
+docker compose up -d
+```
+
+#### Enter database:
+
+```
+docker compose exec postgres psql -U postgres sproutlog
+```
+
+#### Inside psql:
+
+```
+\i data/sproutlogs.sql;    -- seed database
+\dt                     -- list all tables
+exit
+```
+
+#### Start FastAPI Server:
+
+```
+fastapi dev
+```
+
+#### Swagger Docs:
+
+http://localhost:8000/docs
+
+## Roadmap
+
+Future considerations.
+
+Next feature to implement: As a user, I want to mark tasks as completed, so that I can track what care I've already done.
+
+## Contributing
+
+Open to contributions.
+
+## React + TypeScript + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
 ## Separation of Concerns
 
 - SQLAlchemy models handle persistence
@@ -34,116 +135,3 @@ User can add a task to a plant:
 ![Task form](add-task.png)
 User can view all tasks:
 ![Task dashboard](task-dashboard.png)
-
-## Visuals
-
-<!-- Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method. -->
-
-User can add a plant:
-![Plant form](browser-add-task.png)
-User can view all plants:
-![Plants view](browser-plants-dashboard.png)
-User can view plant details:
-![Plant view](browser-plant-card.png)
-User can add a task to a plant:
-![Task form](browser-add-task.png)
-User can view all tasks:
-![Task dashboard](browser-task-dashboard.png)
-
-## Installation
-
-<!-- Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection. -->
-
-See separate project backend and frontend folder's README.md for instructions to get project up and running.
-
-## Usage
-
-<!-- Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README. -->
-
-## Support
-
-<!-- Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc. -->
-
-## Roadmap
-
-Future considerations.
-
-Next feature to implement: As a user, I want to mark tasks as completed, so that I can track what care I've already done.
-
-## Contributing
-
-Open to contributions.
-
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-	globalIgnores(["dist"]),
-	{
-		files: ["**/*.{ts,tsx}"],
-		extends: [
-			// Other configs...
-
-			// Remove tseslint.configs.recommended and replace with this
-			tseslint.configs.recommendedTypeChecked,
-			// Alternatively, use this for stricter rules
-			tseslint.configs.strictTypeChecked,
-			// Optionally, add this for stylistic rules
-			tseslint.configs.stylisticTypeChecked,
-
-			// Other configs...
-		],
-		languageOptions: {
-			parserOptions: {
-				project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-				tsconfigRootDir: import.meta.dirname,
-			},
-			// other options...
-		},
-	},
-]);
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default defineConfig([
-	globalIgnores(["dist"]),
-	{
-		files: ["**/*.{ts,tsx}"],
-		extends: [
-			// Other configs...
-			// Enable lint rules for React
-			reactX.configs["recommended-typescript"],
-			// Enable lint rules for React DOM
-			reactDom.configs.recommended,
-		],
-		languageOptions: {
-			parserOptions: {
-				project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-				tsconfigRootDir: import.meta.dirname,
-			},
-			// other options...
-		},
-	},
-]);
-```
